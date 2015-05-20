@@ -19,10 +19,12 @@ class FileTools:
         '''linux path 2 windows from root path
         '''
         lenpath = len(path)
+        
         pathlist = []
         if lenpath>=2:
             pathlist = path.split("/")
-            pathlist.remove("")
+            if pathlist[0]=="":
+                pathlist.remove("")
             return pathlist[0]+":\\"+"\\".join(pathlist[1:])
 
     def dir(self, path):
