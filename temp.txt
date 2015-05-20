@@ -1,0 +1,10 @@
+def dir(path):
+    files = []
+    dirs = []
+    for r, ds, fs in os.walk(path):
+        for f in fs:
+            files.append(os.path.join(r, f))
+            dirs.append(ds)
+            for d in dirs:
+                files.append(dir(os.path.join(r, d)))
+    return files
