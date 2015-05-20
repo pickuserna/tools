@@ -1,3 +1,4 @@
+##!/usr/bin/env python
 #coding:utf-8
 import sys
 import os
@@ -6,6 +7,23 @@ class FileTools:
         pass
     def filesize(self, filepath):
         return os.path.getsize(filepath)
+    def pathw2l(self, path):
+        ''' windows path 2 linux from root path
+
+        linux format: /c/home/usr/env python
+        '''
+        pathlist = path.split('\\')
+        pathlist[0] =  pathlist[0][0]
+        return "/"+"/".join(pathlist)
+    def pathl2w(self, path):
+        '''linux path 2 windows from root path
+        '''
+        lenpath = len(path)
+        pathlist = []
+        if lenpath>=2:
+            pathlist = path.split("/")
+            pathlist.remove("")
+            return pathlist[0]+":\\"+"\\".join(pathlist[1:])
 
     def dir(self, path):
         '''显示path下所有的子子文件
@@ -19,12 +37,21 @@ class FileTools:
                 #print ff
                 files.append(ff)
         #print files
-        return files        
+        return files
+ft = FileTools()
+funcdict = {"d":ft.dir, "fs":ft.filesize, "pl":ft.pathw2l, "pw":ft.pathl2w}
 if __name__=="__main__":
-    ft = FileTools()
-    if len(sys.argv)==2:
+
+    para = ""
+    arg = ""
+    if len(sys.argv)<2:
         path = sys.argv[1]
+        para = raw_input("输入操作参数:")
+        arg = raw_input("输入路径：")
+        pass
     else:
-        path = raw_input("please input path name:")
-    fs = ft.dir(path)
-    print fs
+        para = sys.argv[1] 
+        arg = sys.argv[2]
+        print para, arg
+    print funcdict.get(para[1:])(arg)
+
