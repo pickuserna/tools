@@ -6,7 +6,20 @@ class FileTools:
     def __init__(self):
         pass
     def filesize(self, filepath):
-        return os.path.getsize(filepath)
+        ''' get file size of a file , or the total size of a directory
+        
+        '''
+        # filepath devote a file, return the size of the file
+
+        if os.path.isfile(filepath):
+            return os.path.getsize(filepath)
+        elif os.path.isdir(filepath):
+            size = 0
+            for f in os.listdir(filepath):
+                size += self.filesize(os.path.join(filepath, f))
+        return size
+    
+             
     def pathw2l(self, path):
         ''' windows path 2 linux from root path
 
@@ -36,9 +49,7 @@ class FileTools:
             #print "r:=%s\nds=%s\nfs=%s\n"%(r, ds, fs)
             for f in fs:
                 ff = os.path.join(r, f)
-                #print ff
                 files.append(ff)
-        #print files
         return files
 ft = FileTools()
 funcdict = {"d":ft.dir, "fs":ft.filesize, "pl":ft.pathw2l, "pw":ft.pathl2w}
