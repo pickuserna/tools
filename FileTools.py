@@ -1,4 +1,4 @@
-##!/usr/bin/env python
+#!/usr/bin/env python
 #coding:utf-8
 import sys
 import os
@@ -51,20 +51,29 @@ class FileTools:
                 ff = os.path.join(r, f)
                 files.append(ff)
         return files
+    def helpFileTools(self):
+        print '''
+            "d":ft.dir, "fs":ft.filesize, "pl":ft.pathw2l, "pw":ft.pathl2w
+        '''        
 ft = FileTools()
-funcdict = {"d":ft.dir, "fs":ft.filesize, "pl":ft.pathw2l, "pw":ft.pathl2w}
+funcdict = {"d":ft.dir, "s":ft.filesize, "l":ft.pathw2l, "w":ft.pathl2w, "help":ft.helpFileTools}
+
 if __name__=="__main__":
 
     para = ""
     arg = ""
-    if len(sys.argv)<2:
-        path = sys.argv[1]
-        para = raw_input("输入操作参数:")
-        arg = raw_input("输入路径：")
-        pass
-    else:
-        para = sys.argv[1] 
-        arg = sys.argv[2]
-        print para, arg
-    print funcdict.get(para[1:])(arg)
+    if len(sys.argv)==2 and cmp(sys.argv[1][1:],"help")==0:
+         ft.helpFileTools()
+    else:    
+        if len(sys.argv)<=2:
+            path = sys.argv[1]
+            print len(sys.argv), cmp(sys.argv[1], "help"), sys.argv[1][1:]
+            para = raw_input("The op_select:")
+            arg = raw_input("The args:")
+           
+        else:
+            para = sys.argv[1] 
+            arg = sys.argv[2]
+            print para, arg
+        print funcdict.get(para[1:])(arg)
 

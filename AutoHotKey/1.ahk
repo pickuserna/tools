@@ -13,39 +13,92 @@ pythonPath =C:\Python27\python.exe
 qqPath = C:\Program Files (x86)\Tencent\QQ\Bin\QQ.exe 
 
 ;Not By The Default
-totalCMDPath = D:\BaiduYunDownload\Total_Commander_v8.5_汉化破解绿色正式版\TOTALCMD.EXE
+totalCMDPath =D:\tools\Total_Commander_v8.5\TOTALCMD.EXE
 vimPath = D:\software\gVimPortable_7.4\vim74\gvim.exe 
 xmindPath = D:\Program Files (x86)\XMind\XMind.exe 
 
 youdaoPath = C:\Users\GLIP\AppData\Local\Youdao\Dict\Application\YodaoDict.exe
-
+cmd = C:\Windows\system32\cmd.exe
+#1:: 
+run %cmd% /c start gvim D:\tools\AutoHotKey\1.ahk
+winactivate
+return
 ;#a:: run "%BaiduYunPath% "
 #b:: 
 run C:\Program Files (x86)\Git\bin\sh.exe --login -i
-Sleep 10
+Sleep 10Vim
+
+
 send cd ~{Enter}
 return 
 
 
-
-
+start(path, wclass)
+{
+    IfWinExist ahk_class %wclass%
+    {
+        winactivate
+    }
+    else
+    {
+        run %path%
+        winactivate
+    }
+}
+paste(t)
+{
+    Sleep %t%
+    send %clipboard%{Enter}{Enter}
+}
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;chrome;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 #c:: 
-run %chromePath%
+IfWinExist ahk_class Chrome_WidgetWin_1
+{
+    winactivate
+}
+else
+{
+run http://www.google.com
+;msgbox "winwait"
+winwait ahk_class Chrome_WidgetWin_1
+winactivate
+sleep 3000
+send %clipboard%{Enter}{Enter}
+}
 return 
 
+#d::
+IfWinExist ahk_class Chrome_WidgetWin_1
+{
+    run http://www.google.com
+    winactivate
+    paste(3000)
+}
+else
+{
+run http://www.google.com
+;msgbox "winwait"
+winwait ahk_class Chrome_WidgetWin_1
+winactivate
+paste(3000)
+}
+
+return
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;----chrome-----;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-
-
-
-#e:: run %evernotePath%
+#e:: start(evernotePath, "ENMainFrame")
 ;#g:: run %goagentPath%
 
-#m:: run %myeclipsePath%
+#m:: start(myeclipsePath,"SWT_Window")
 #n:: run %notepadPath%
 #o:: run %outlookPath%
 #q:: run %qqPath%
 #t:: run %totalCMDPath%
-#v:: run %vimPath%
+#v:: start(vimPath, "Vim")
 ;#x:: run %xmindPath%
 #y:: run %youdaoPath%
+#z:: 
+start(chromePath, "Chrome_WidgetWin_1")
+;;3char
+;#gt::;
