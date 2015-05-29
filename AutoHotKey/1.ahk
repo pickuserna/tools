@@ -68,6 +68,7 @@ send %clipboard%{Enter}{Enter}
 return 
 
 #d::
+send ^c
 IfWinExist ahk_class Chrome_WidgetWin_1
 {
     run http://www.google.com
@@ -90,13 +91,13 @@ return
 #e:: start(evernotePath, "ENMainFrame")
 ;#g:: run %goagentPath%
 
-#m:: start(myeclipsePath,"SWT_Window")
 #n:: run %notepadPath%
 #o:: run %outlookPath%
 #q:: run %qqPath%
 #t:: run %totalCMDPath%
 #v:: start(vimPath, "Vim")
 ;#x:: run %xmindPath%
+#w:: start(myeclipsePath,"SWT_Window0")
 #y:: run %youdaoPath%
 #z:: 
 start(chromePath, "Chrome_WidgetWin_1")
